@@ -1,4 +1,7 @@
-# ImageTrend DataMart documentation
+# ImageTrend DataMart
 
-This repository will serve as internal documentation of (1) the reverse-engineering of Image Trend's DataMart database, (2) implementation details of Power BI workflow and setup for internal reporting and (3) an open-source repository for other agencies to use as a potential starting point.
+This repository will serve to:
+- Document the reverse-engineering of ImageTrend's DataMart star schema
+- Outline implementation details of internal reporting workflows and setup process using Power BI
+- Serve as an open-source repository for other agencies to use as a potential starting point.
 
