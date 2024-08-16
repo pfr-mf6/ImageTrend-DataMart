@@ -34,3 +34,27 @@ A **measure** is a calculation created in Power BI using the Data Analysis Expre
 2. **Using Measures:**
 
 Measures are used in Power BI reports to present aggregated data such as sums, counts, averages, minimums, maximums, or more complex calculations.  You can use measures in visualizations, such as bar charts, pie charts, tables, matrices, and others.  Measures automatically respect the filter context of the visuals they are used in. This means they will recalculate dynamically based on any filters, slicers, or drill-down operations applied in the report.  Measures recalculate based on user interactions, ensuring relevant and up-to-date insights. Power BI optimizes measures for performance, making them efficient in handling large datasets.
+
+
+
+
+
+
+---
+
+
+
+```DAX
+All Incidents = COUNTROWS('DwEms Fact_Incident')
+```
+
+```DAX
+ePCRs - 3.5.1 = CALCULATE(
+    [All Incidents],
+    -- This captures ePCRs made with the "new" medical form
+    -- This form launched 2024.05.20 for station (3, 8, 9 and 31)
+    -- This form launched 2024.07.01 for CHAT
+    -- This form launched 2024.08.19 for the rest of PF&R
+    'DwEms Fact_Incident'[Incident_Form_Number] = 118
+)
+```
