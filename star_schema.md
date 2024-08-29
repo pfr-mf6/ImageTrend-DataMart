@@ -1,3 +1,0 @@
-# **Star Schema**
-
-go.
