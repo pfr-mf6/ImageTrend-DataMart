@@ -2,7 +2,7 @@
 
 We can use the [provided documentation](./static/EliteDataMartGuide.pdf) from ImageTrend to reverse-engineer the star schema.  An extracted raw version can be found [here](./static/raw_query_nfirs.sql).
 
-The below is a better organized version of that query and is a good starting point for understanding how the tables in DataMart are related.  We can iteratively chunk this query and group our tables together.  Before we start, we can ensure that our [dataflow](Dataflow.md) is pulling i the needed tables.
+The below is a better organized version of that query and is a good starting point for understanding how the tables in DataMart are related.  We can iteratively chunk this query and group our tables together.  Before we start, we can ensure that our [dataflow](Dataflow.md) is pulling in the needed tables.
 
 ```sql
 CREATE VIEW [dbo].[DSV_Elite_Fire_View] AS SELECT Fact_Fire.*
