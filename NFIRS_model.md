@@ -1,6 +1,6 @@
 # Initial setup of NFIRS data tables
 
-We can use the [provided documentation](./Elite%20Data%20Mart%20Guide%20v22.04.pdf) from ImageTrend to reverse-engineer the "star schema."  An extracted raw version can be found [here](./static/raw_query_nemsis.sql).
+We can use the [provided documentation](./static/EliteDataMartGuide.pdf) from ImageTrend to reverse-engineer the "star schema."  An extracted raw version can be found [here](./static/raw_query_nemsis.sql).
 
 The below is a better organized version of that query and is a good starting point for understanding how the tables in DataMart are related.
 
