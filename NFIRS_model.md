@@ -139,7 +139,7 @@ In addition to module data, we can use ImageTrend's internal application data to
 
 ## Troubleshooting
 
-WIth only the report we've made so far we now have an at-a-glance view of our bulk reports. This allows us to quickly assess training, implementation and/or reporting issues all at once!
+With only the report we've made so far we now have an at-a-glance view of our bulk reports. This allows us to quickly assess training, implementation and/or reporting issues all at once!
 
 For instance, reports with Engine 3 and Truck 3 do not include an FMA or `Primary Station Name` while all other EOPS units do (not visible in the above example).  In order to problem-solve this inconsistency, we may need to:
 
@@ -163,7 +163,7 @@ Additionally, each report includes an associated `Apparatus` module for each res
 
 For example, we may wish to:
  - Query every `Primary Action Taken` from `Engine 31` from `2024-01-01` to `2025-01-01`.
- - Tally the `Incident Type` for each Report that a given `Firefighter` has been recorded as accumulated over an entire career.
+ - Tally the `Incident Type` for each Report that a given `Firefighter` has been recorded in as accumulated over an entire career.
  - Graph each "tapout" `Alarm Time` for a given `Apparatus` over a given month.
 
 
