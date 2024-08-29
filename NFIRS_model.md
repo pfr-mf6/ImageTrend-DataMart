@@ -115,7 +115,7 @@ Once setup - it should look like this:
 
 ## Bulding our first Report
 
-In order to test our assumptions and slowly iterate over the build-out, we can create sample a report with a table view.  Each row should correspond to one "Incident Report"
+In order to test our assumptions and slowly iterate over the build-out, we can create a sample report with a table view.  Each row should correspond to one "Incident Report".
 
 ### Reverse-engineering ImageTrend's URL scheme
 
