@@ -1,8 +1,8 @@
-# Initial setup of NFIRS data tables
+# Overview and layout for NFIRS data tables
 
-We can use the [provided documentation](./static/EliteDataMartGuide.pdf) from ImageTrend to reverse-engineer the "star schema."  An extracted raw version can be found [here](./static/raw_query_nemsis.sql).
+We can use the [provided documentation](./static/EliteDataMartGuide.pdf) from ImageTrend to reverse-engineer the star schema.  An extracted raw version can be found [here](./static/raw_query_nfirs.sql).
 
-The below is a better organized version of that query and is a good starting point for understanding how the tables in DataMart are related.
+The below is a better organized version of that query and is a good starting point for understanding how the tables in DataMart are related.  We can iteratively chunk this query and group our tables together.  Before we start, we can ensure that our [dataflow](Dataflow.md) is pulling i the needed tables.
 
 ```sql
 CREATE VIEW [dbo].[DSV_Elite_Fire_View] AS SELECT Fact_Fire.*
@@ -77,10 +77,7 @@ LEFT JOIN [dbo].[DSV_Dim_Incident_Time_Of_Day_Fire] AS [DSV_Dim_Incident_Time_Of
 GO
 ```
 
-Next, we can iteratively chunk this query and group our tables together.
-
 For example, the first few tables have simple relationships and are connected like this:
-
 
 
 1. **Fact_Fire to Dim_Agency**
@@ -109,8 +106,33 @@ For example, the first few tables have simple relationships and are connected li
    - **Cardinality**: **Many-to-One**
    - **Direction**: **One-way**. The filter should travel from `Dim_Wildland` to `Fact_Fire`.
 
-- **Filter Direction**: Filters should generally flow **one-way** from the dimension tables (`Dim_Agency`, `Dim_Fire`, `Dim_StructureFire`, `Dim_Arson`, `Dim_Wildland`) to the fact table (`Fact_Fire`). This setup ensures that when you use dimension attributes to slice and dice your data, the filters propagate correctly to the fact table, allowing you to analyze the data at various levels of granularity.
+**Filter Direction**: Filters should generally flow **one-way** from the dimension tables (`Dim_Agency`, `Dim_Fire`, `Dim_StructureFire`, `Dim_Arson`, `Dim_Wildland`) to the fact table (`Fact_Fire`). This setup ensures that when you use dimension attributes to slice and dice your data, the filters propagate correctly to the fact table, allowing you to analyze the data at various levels of granularity.
 
 Once setup - it should look like this:
 
 ![image](./static/ss1.PNG)
+
+
+## Creating our Mental Modal
+
+**Assumption:** _Each row in the Fact_Fire table is an NFIRS-compliant "incident report"_ (as well as its associated ImageTrend internal data)
+
+If we refer to the [NFIRS reference guide](https://www.usfa.fema.gov/downloads/pdf/nfirs/nfirs_complete_reference_guide_2015.pdf) (note page 2-2) we see NFIRS "modules" that appear to have associated dimentional tables in DataMart.  These include `Fire`, `Structure Fire`, `Wildland`, `Arson`, et cetera.  If applicable in the report, one-or-more modules will be included.
+
+Additionally, each report includes an associated `Apparatus` module for each responding unit, as well as their respective responder `Personnel` records. Therefore, the `Fact_Fire` table is connected in such a way as to give us an "Incident Report" level view. But, perhaps we'd like to query on an apparatus-level or a personnel-level.
+
+For example, we may wish to:
+ - Query every `Primary Action Taken` from `Engine 31` from `2024-01-01` to `2025-01-01`.
+ - Tally the `Incident Type` for each Report that a given `Firefighter` has been recorded as accumulated over an entire career.
+ - Graph each "tapout" `Alarm Time` for a given `Apparatus` over a given month.
+
+
+## Understanding Bridge tables
+
+Reference [Microsoft docs](https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-bidirectional-filtering) for an explanation of bidirectional cross-filtering.
+
+#TODO
+
+## Creating additional `Fact` tables for additional reporting needs
+
+#TODO
