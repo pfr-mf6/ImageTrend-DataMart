@@ -9,4 +9,3 @@ This repository will serve to:
 
 For information about the [NFIRS Semantic Model](./NFIRS_model.md)
 
-For information about the [NEMSIS Semantic Model](./NEMSIS_model.md)

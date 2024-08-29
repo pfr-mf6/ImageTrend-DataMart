@@ -113,6 +113,46 @@ Once setup - it should look like this:
 ![image](./static/ss1.PNG)
 
 
+## Bulding our first Report
+
+In order to test our assumptions and slowly iterate over the build-out, we can create sample a report with a table view.  Each row should correspond to one "Incident Report"
+
+### Reverse-engineering ImageTrend's URL scheme
+
+Becuase ImageTrend Elite is a SaaS product with which we interface entirely via the web - we can easily re-create the dynamic URL needed to navigate to any Incident Report if we closely strutinize the URL of any given report.
+
+We can then create a computed-column for the URL of the report and provide that as a click-able link in our PowerBI reports.
+
+```DAX
+Link to Elite Web = "https://portland.imagetrendelite.com/Elite/Organizationportland/Agencyportlandfi/FireRunForm#/Incident" & 'DwFire Fact_Fire'[Incident_ID_Internal] & "/Form" & 'DwFire Fact_Fire'[Basic_Incident_Form_Number]
+```
+
+#TODO - break down further in to each variable as this is for Portland only.
+
+## Report view so far
+
+![image](./static/ReportStatus.PNG)
+
+As we slowly build, we can include information from each module to "stitch" together the entire report.
+
+In addition to module data, we can use ImageTrend's internal application data to further provide context.  For example, we can conditionally format off of `Basic_Incident_Validity_Score` and/or `Basic_Incident_Status` to show if a given report has been completed.
+
+## Troubleshooting
+
+WIth only the report we've made so far we now have an at-a-glance view of our bulk reports. This allows us to quickly assess training, implementation and/or reporting issues all at once!
+
+For instance, reports with Engine 3 and Truck 3 do not include an FMA or `Primary Station Name` while all other EOPS units do (not visible in the above example).  In order to problem-solve this inconsistency, we may need to:
+
+ - Scrutinize our ImageTrend configuration
+ - Review and/or modify our user-interface for that report
+ - Ensure CAD files consistently report that item
+ - Speak with crews about charting habits and knowledge of policy
+ - Double check our understanding of the database schema itself
+ 
+ During this process it's important that remember "rubber duck" debugging and often step through the entire process to this point. Ask yourself if this is an element imported from outside ImageTrend (perhaps via a CAD file), a computed item based off other columns (such as responce times), a configurable item inside the application settings (such as member roles), and/or an element entered by the Firefighter filling out the report.
+
+
+
 ## Creating our Mental Modal
 
 **Assumption:** _Each row in the Fact_Fire table is an NFIRS-compliant "incident report"_ (as well as its associated ImageTrend internal data)
@@ -131,8 +171,8 @@ For example, we may wish to:
 
 Reference [Microsoft docs](https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-bidirectional-filtering) for an explanation of bidirectional cross-filtering.
 
-#TODO
+#TODO - import docs here
 
 ## Creating additional `Fact` tables for additional reporting needs
 
-#TODO
+#TODO - import docs here
